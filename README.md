@@ -3,8 +3,8 @@ GUI version of the card game named Dungeon Maythem
 
 ## TO DO:
 - [ ] Create game logic and classes
-  - [ ] Card class
-  - [ ] Player class
+  - [x] Card class
+  - [x] Player class
     
 - [ ] Create some basic gui
   - [ ] MainWindow class
