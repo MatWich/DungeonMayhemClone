@@ -1,6 +1,6 @@
 try:
     from PyQt5.QtWidgets import QWidget, QPushButton, QLabel, QGridLayout
-    from PyQt5.QtGui import QCursor, QPixmap
+    from PyQt5.QtGui import QCursor, QPixmap, QMouseEvent
     from PyQt5 import QtCore, QtGui
 except ImportError:
     raise ImportError("Cannot import all modules")
