@@ -2,20 +2,22 @@ try:
     from PyQt5.QtWidgets import QWidget, QPushButton, QLabel, QGridLayout
     from PyQt5.QtGui import QCursor, QPixmap, QMouseEvent
     from PyQt5 import QtCore, QtGui
+    from config import *
 except ImportError:
     raise ImportError("Cannot import all modules")
 
-colorList = {"Palladin": "rgb(214, 48, 2)",
-             "Monk": "rgb(204, 180, 75)",
-             "Devil": "rgb(170, 75, 204)",
-             "Barbarian": "rgb(75, 204, 122)"
-             }
+
 
 
 class UIMenu(QWidget):
     def __init__(self, parent=None):
         super(UIMenu, self).__init__(parent)
         self.layout = QGridLayout()
+        keys = []
+        # beacuse keys() returns not indexable object
+        for key in COLOR_LIST.keys():
+            keys.append(key)
+
         self.setStyleSheet("*{ margin: 0px;"
                            "padding: 0px;"
                            "font-family: windlass;}")
@@ -30,10 +32,10 @@ class UIMenu(QWidget):
         }""")
 
         # buttons
-        self.palladinBtn = self.create_button("Palladin")
-        self.monkBtn = self.create_button("Monk")
-        self.devilBtn = self.create_button("Devil")
-        self.barbarianBtm = self.create_button("Barbarian")
+        self.palladinBtn = self.create_button(keys[0])
+        self.monkBtn = self.create_button(keys[1])
+        self.devilBtn = self.create_button(keys[2])
+        self.barbarianBtm = self.create_button(keys[3])
 
         # button onclicks
         self.palladinBtn.clicked.connect(lambda: self.palladinBtnOnClick(self.palladinBtn))
@@ -51,8 +53,8 @@ class UIMenu(QWidget):
     def create_button(self, text):
         button = QPushButton(text)
         button.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
-        button.setStyleSheet("*{border: 3px solid " + colorList[text] + ";" +
-                             "color: " + colorList[text] + ";" +
+        button.setStyleSheet("*{border: 3px solid " + COLOR_LIST[text] + ";" +
+                             "color: " + COLOR_LIST[text] + ";" +
                              "margin: 10px;" +
                              "padding: 6px;" +
                              "border-radius: 5px;" +
@@ -60,7 +62,7 @@ class UIMenu(QWidget):
                              "}" +
                              "*:hover{" +
                              "color: #fff;" +
-                             "background: " + colorList[text] + ";" +
+                             "background: " + COLOR_LIST[text] + ";" +
                              "}"
                              )
         return button

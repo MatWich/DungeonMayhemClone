@@ -1,13 +1,12 @@
-from PyQt5.QtCore import QTimer
+from PyQt5.QtCore import QTimer, QThreadPool
 
 try:
     from PyQt5.QtWidgets import QWidget, QPushButton, QLabel, QGridLayout, QGraphicsOpacityEffect
     from PyQt5.QtGui import QCursor, QPixmap, QMouseEvent
     from PyQt5 import QtCore, QtGui
-    from classes.gui.AnimationLabel import AnimationLabel
     import os
     from config import *
-    from time import process_time_ns
+    from time import process_time_ns, sleep, time
     import threading
 except ImportError:
     raise ImportError("Cannot import all modules")
@@ -20,6 +19,9 @@ class UIStart(QWidget):
         super(UIStart, self).__init__(parent)
         self.layout = QGridLayout()
         self.label = QLabel()
+        self.timer = QTimer()
+        self.counter = 0
+        self.threadpool = QThreadPool()
 
         image = QPixmap(os.path.join(ASSETS_DIR, "Dungeon-Mayhem-logo1.png"))
         self.label.setPixmap(image)
@@ -34,23 +36,40 @@ class UIStart(QWidget):
                                  "background-size: cover;"
                                  "}")
 
-
-        self.textLabel = AnimationLabel("Click anywhere to start")
+        self.textLabel = QLabel("Click anywhere to start")
         self.textLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
-        self.textLabel.startAnimation()
-
         self.layout.addWidget(self.label, 0, 0, 1, 2)
         self.layout.addWidget(self.textLabel, 1, 0, 1, 2)
         self.setLayout(self.layout)
+        self.fading()
 
+        self.timer.setInterval(1001)    # you have to pass here bigger time than animationtime
+        self.timer.timeout.connect(lambda: self.fade(self.textLabel))
+        self.timer.start()
 
-    # def fade(self, widget):
-    #     widget.setWindowOpacity(0.5)
-    #     QTimer.singleShot(1000, self.unfade)
-    #
-    # def unfade(self, widget):
-    #     widget.setWindowOpacity(1)
-    #     QTimer.singleShot(1000, self.fade)
-    #
-    #
+    def fading(self):
+        self.counter += 1
+        if self.counter % 2 == 0:
+            self.fade(self.textLabel)
+        else:
+            self.unfade(self.textLabel)
 
+    def fade(self, widget):
+        self.effect = QGraphicsOpacityEffect()
+        widget.setGraphicsEffect(self.effect)
+
+        self.animation = QtCore.QPropertyAnimation(self.effect, b"opacity")
+        self.animation.setDuration(1000)
+        self.animation.setStartValue(1)
+        self.animation.setEndValue(0)
+        self.animation.start()
+
+    def unfade(self, widget):
+        self.effect = QGraphicsOpacityEffect()
+        widget.setGraphicsEffect(self.effect)
+
+        self.animation = QtCore.QPropertyAnimation(self.effect, b"opacity")
+        self.animation.setDuration(1000)
+        self.animation.setStartValue(0)
+        self.animation.setEndValue(1)
+        self.animation.start()

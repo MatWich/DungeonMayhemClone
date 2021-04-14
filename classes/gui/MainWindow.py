@@ -12,7 +12,7 @@ except ImportError:
 class MainWindow(QMainWindow):
     def __init__(self, parent=None):
         super(QMainWindow, self).__init__(parent)
-        # self.show_menu()
+        #self.show_menu()
         self.starting_screen()
 
     def show_menu(self):
