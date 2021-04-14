@@ -1,5 +1,3 @@
-from PyQt5 import QtGui
-
 try:
     import sys
     from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QWidget
@@ -23,12 +21,6 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(self.UIMenu)
         self.show()
 
-    # def mousePressEvent(self, QMouseEvent):
-    #     print(QMouseEvent.pos())
-    # def mouseReleaseEvent(self, QMouseEvent):
-    #     cursor = QtGui.QCursor()
-    #     print(cursor.pos())
-
     def show_game_screen(self):
         self.setWindowTitle("Dungeon Maythem Clone Game")
         self.setMinimumWidth(800)
@@ -39,6 +31,6 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("Dungeon Maythem Clone Game")
         self.setMinimumWidth(800)
         self.setMinimumHeight(450)
-        self.UIStart = UIStart()
+        self.UIStart = UIStart(self)
         self.setCentralWidget(self.UIStart)
         self.show()

@@ -7,8 +7,6 @@ except ImportError:
     raise ImportError("Cannot import all modules")
 
 
-
-
 class UIMenu(QWidget):
     def __init__(self, parent=None):
         super(UIMenu, self).__init__(parent)

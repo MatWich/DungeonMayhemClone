@@ -1,13 +1,13 @@
-from PyQt5.QtCore import QTimer, QThreadPool
-
 try:
     from PyQt5.QtWidgets import QWidget, QPushButton, QLabel, QGridLayout, QGraphicsOpacityEffect
     from PyQt5.QtGui import QCursor, QPixmap, QMouseEvent
-    from PyQt5 import QtCore, QtGui
+    from PyQt5 import QtCore, QtGui, Qt
     import os
     from config import *
     from time import process_time_ns, sleep, time
     import threading
+    from PyQt5.QtCore import QTimer, QThreadPool
+    from PyQt5.Qt import Qt
 except ImportError:
     raise ImportError("Cannot import all modules")
 
@@ -16,12 +16,13 @@ except ImportError:
 
 class UIStart(QWidget):
     def __init__(self, parent=None):
-        super(UIStart, self).__init__(parent)
+        super(UIStart, self).__init__(parent=parent)
         self.layout = QGridLayout()
         self.label = QLabel()
         self.timer = QTimer()
         self.counter = 0
         self.threadpool = QThreadPool()
+        #self.parent = parent
 
         image = QPixmap(os.path.join(ASSETS_DIR, "Dungeon-Mayhem-logo1.png"))
         self.label.setPixmap(image)
@@ -52,6 +53,8 @@ class UIStart(QWidget):
         if self.counter % 2 == 0:
             self.fade(self.textLabel)
         else:
+            if self.counter == 3:
+                self.counter = -1
             self.unfade(self.textLabel)
 
     def fade(self, widget):
@@ -73,3 +76,17 @@ class UIStart(QWidget):
         self.animation.setStartValue(0)
         self.animation.setEndValue(1)
         self.animation.start()
+
+    # def mousePressEvent(self, event):
+    #     #print(QMouseEvent.pos())
+    #     #self.parent.show_menu()
+    #     if event.key() == Qt.Key_Space:
+    #         self.parent.parent().parent().
+
+    def mousePressEvent(self, QMouseEvent):
+        print(QMouseEvent.pos())
+        self.timer.killTimer(self.timer.timerId())
+
+        # it actuall works XDD
+        x = lambda : self.parent().show_menu()
+        x()
