@@ -3,6 +3,7 @@ try:
 except ImportError:
     raise ImportError("Cannot import all modules in config.py")
 
+TITLE = "Dungeon Maythem Clone Game"
 
 PROJECT_DIR = os.path.dirname(__file__)
 ASSETS_DIR = os.path.join(PROJECT_DIR, "assets")

@@ -22,8 +22,7 @@ class UIMenu(QWidget):
                            "font-family: windlass;}")
         self.label = QLabel()
         self.label.setText("Choose your deck")
-        self.label.setAlignment(QtCore.Qt.AlignCenter)
-
+        self.label.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label.setStyleSheet("""QWidget{
             font-size: 52px;
             margin: 10px;
@@ -35,12 +34,6 @@ class UIMenu(QWidget):
         self.monkBtn = self.create_button(keys[1])
         self.devilBtn = self.create_button(keys[2])
         self.barbarianBtm = self.create_button(keys[3])
-
-        # button onclicks
-        self.palladinBtn.clicked.connect(lambda: self.palladinBtnOnClick(self.palladinBtn))
-        self.monkBtn.clicked.connect(lambda: self.monkBtnOnClick(self.monkBtn))
-        self.devilBtn.clicked.connect(lambda: self.devilBtnOnClick(self.devilBtn))
-        self.barbarianBtm.clicked.connect(lambda: self.barbarianBtnOnClick(self.barbarianBtm))
 
         self.layout.addWidget(self.label, 0, 0, 1, 2)
         self.layout.addWidget(self.palladinBtn, 1, 0)
@@ -65,16 +58,3 @@ class UIMenu(QWidget):
                              "}"
                              )
         return button
-
-    """ ON CLICKS """
-    def palladinBtnOnClick(self, b):
-        print(f"{b.text()} button clicked")
-
-    def devilBtnOnClick(self, b):
-        print(f"{b.text()} button clicked")
-
-    def monkBtnOnClick(self, b):
-        print(f"{b.text()} button clicked")
-
-    def barbarianBtnOnClick(self, b):
-        print(f"{b.text()} button clicked")
