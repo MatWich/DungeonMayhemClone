@@ -11,3 +11,11 @@ GUI version of the card game named Dungeon Maythem
   - [ ] Game Window
   - [ ] Menu Window
 - [ ] Connect GUI to logic
+
+# How to start 
+
+```
+$ git clone https://github.com/MatWich/DungeonMaythemClone.git
+$ cd DungeonMaythemClone
+$ python ./main.py
+```
