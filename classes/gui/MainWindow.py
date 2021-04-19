@@ -3,7 +3,9 @@ try:
     from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QWidget
     from classes.gui.UIMenu import UIMenu
     from classes.gui.UIStart import UIStart
+    from classes.gui.UIGame import UIGame
 except ImportError:
+
     raise ImportError("Cannot import all modules")
 
 
@@ -11,13 +13,15 @@ class MainWindow(QMainWindow):
     def __init__(self, parent=None):
         super(QMainWindow, self).__init__(parent)
         #self.show_menu()
-        self.starting_screen()
+        #self.starting_screen()
+        self.show_game_screen()
+
 
     def show_menu(self):
         self.setWindowTitle("Dungeon Maythem Clone Game")
         self.setMinimumWidth(800)
         self.setMinimumHeight(450)
-        self.UIMenu = UIMenu()
+        self.UIMenu = UIMenu(self)
         self.setCentralWidget(self.UIMenu)
         self.show()
 
@@ -25,6 +29,8 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("Dungeon Maythem Clone Game")
         self.setMinimumWidth(800)
         self.setMinimumHeight(450)
+        self.UIGame = UIGame(self)
+        self.setCentralWidget(self.UIGame)
         self.show()
 
     def starting_screen(self):

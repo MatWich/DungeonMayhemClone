@@ -12,6 +12,7 @@ class UIMenu(QWidget):
         super(UIMenu, self).__init__(parent)
         self.layout = QGridLayout()
         keys = []
+        self.parent = parent
         # beacuse keys() returns not indexable object
         for key in COLOR_LIST.keys():
             keys.append(key)

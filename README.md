@@ -17,5 +17,6 @@ GUI version of the card game named Dungeon Maythem
 ```
 $ git clone https://github.com/MatWich/DungeonMaythemClone.git
 $ cd DungeonMaythemClone
+$ pip install -r requirements.txt
 $ python ./main.py
 ```
