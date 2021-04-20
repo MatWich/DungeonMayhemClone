@@ -10,6 +10,10 @@ class UIGame(QWidget):
     def __init__(self, parent):
         super(UIGame, self).__init__(parent)
 
+        self.initUI()
+
+
+    def initUI(self):
         self.setStyleSheet("""
                 *{
                     margin: 0px;

@@ -14,8 +14,8 @@ class MainWindow(QMainWindow):
     def __init__(self, parent=None):
         super(QMainWindow, self).__init__(parent)
         #self.show_menu()
-        #self.starting_screen()
-        self.show_game_screen()
+        self.starting_screen()
+        #self.show_game_screen()
 
 
     def show_menu(self):

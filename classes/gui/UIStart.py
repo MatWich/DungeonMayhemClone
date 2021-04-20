@@ -87,6 +87,6 @@ class UIStart(QWidget):
         print(QMouseEvent.pos())
         self.timer.killTimer(self.timer.timerId())
 
-        # it actuall works XDD
+        # it actually works XDD
         x = lambda : self.parent().show_menu()
         x()

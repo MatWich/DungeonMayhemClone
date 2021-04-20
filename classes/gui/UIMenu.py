@@ -42,6 +42,7 @@ class UIMenu(QWidget):
         self.layout.addWidget(self.barbarianBtm, 2, 1)
         self.setLayout(self.layout)
 
+    """ HELPERS """
     def create_button(self, text):
         button = QPushButton(text)
         button.setCursor(QCursor(QtCore.Qt.PointingHandCursor))

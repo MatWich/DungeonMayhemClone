@@ -1,12 +1,12 @@
 class Card:
-    def __init__(self, name, attack=0, actions=0, draw=0, heal=0):
-        self.name = name
-        self.attack = attack
-        self.actions = actions
-        self.draw = draw
-        self.heal = heal
+    def __init__(self, info):
+        self.name = info["name"]
+        self.attack = info["attack"]
+        self.actions = info["actions"]
+        self.draw = info["draw"]
+        self.heal = info["heal"]
+        self.shield = info["shield"]
 
     # just for condsole output
     def __repr__(self):
-        return f"{self.name} atk: {self.attack} act: {self.actions} draw: {self.draw}"
-        
+        return f"{self.name} atk: {self.attack} act: {self.actions} draw: {self.draw} shield: {self.shield} heal: {self.heal}"

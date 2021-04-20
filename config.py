@@ -8,8 +8,13 @@ TITLE = "Dungeon Maythem Clone Game"
 PROJECT_DIR = os.path.dirname(__file__)
 ASSETS_DIR = os.path.join(PROJECT_DIR, "assets")
 
-COLOR_LIST = {"Palladin": "rgb(214, 48, 2)",
-             "Monk": "rgb(204, 180, 75)",
-             "Devil": "rgb(170, 75, 204)",
-             "Barbarian": "rgb(75, 204, 122)"
+RED = "Palladin"
+YELLOW = "Monk"
+PURPLE = "Devil"
+GREEN = "Barbarian"
+
+COLOR_LIST = {RED: "rgb(214, 48, 2)",
+              YELLOW: "rgb(204, 180, 75)",
+              PURPLE: "rgb(170, 75, 204)",
+              GREEN: "rgb(75, 204, 122)"
               }

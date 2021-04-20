@@ -1,5 +1,6 @@
 try:
     from classes.game_logic.Card import Card
+    from classes.game_logic.Data import Data
     import random
 except ImportError as ex:
     raise ImportError("Cannot import all modules")
@@ -10,17 +11,19 @@ class Player:
         self.color = color
         self.hand = []
         # this will be replaced by global list with cards by using .copy() method
-        self.deck = [Card("card" + str(x), random.randint(0, 1), random.randint(0, 1), random.randint(0, 1)) for x in range(6)]
+        self.deck = []
         self.discardPile = []
         self.hp = None
         self.shield = None
         self.actions = None
+        self.data = Data.get_instance()
         self.set_up()
 
     def set_up(self):
         self.hp = 10
         self.shield = 0
         self.actions = 1
+        self.set_deck(self.color)
 
         for i in range(3):
             self.draw_card()
@@ -42,9 +45,11 @@ class Player:
             for i in range(card.draw):
                 self.draw_card()
         if card.heal:
-            self.hp += self.heal
+            self.hp += card.heal
             if self.hp > 10:
                 self.hp = 10
+        if card.shield != 0:
+            self.shield += card.shield
         '''end of action of the card'''
         self.discardPile.append(card)
         self.hand.pop(index)
@@ -61,8 +66,6 @@ class Player:
         if self.is_deck_empty():
             self.deck = self.discardPile.copy()
             self.discardPile.clear()
-
-
 
     def take_damage(self, amount):
         if self.shield:
@@ -84,13 +87,19 @@ class Player:
     def is_dead(self):
         return True if self.hp <= 0 else False
 
+    def has_actions(self):
+        return True if self.actions > 0 else False
+
     """ HELPERS """
     def show_hand(self):
-        for card in self.hand:
-            print(card)
+        for index, card in enumerate(self.hand):
+            print(f"{index}.{card}")
 
     def summary(self):
-        print(f"HP: {self.hp}, SHIELD: {self.shield} HAND: {len(self.hand)} ")
+        print(f"HP: {self.hp}, SHIELD: {self.shield} HAND: {len(self.hand)} ACTIONS: {self.actions}")
+
+    def set_deck(self, color):
+        self.deck = self.data.get_redDeck()
 
 
 if __name__ == "__main__":
