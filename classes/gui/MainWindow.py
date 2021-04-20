@@ -1,3 +1,5 @@
+from PyQt5.QtGui import QPainter, QPixmap
+
 try:
     import sys
     from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QWidget
@@ -45,3 +47,10 @@ class MainWindow(QMainWindow):
         self.UIStart = UIStart(self)
         self.setCentralWidget(self.UIStart)
         self.show()
+
+    def paintEvent(self, event):  # set background_img
+        painter = QPainter(self)
+        painter.drawRect(self.rect())
+        pixmap = QPixmap(os.path.join(ASSETS_DIR, "bg1.jpg"))  # Change to the relative path of your own image
+
+        painter.drawPixmap(self.rect(), pixmap)

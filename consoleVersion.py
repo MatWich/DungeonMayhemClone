@@ -7,7 +7,7 @@ except ImportError:
     raise ImportError("Cannot import all modules")
 
 if __name__ == '__main__':
-    d = Data()
+    d = Data.get_instance()
     p1 = Player(RED)
     p2 = Player(RED)
     counter = 0

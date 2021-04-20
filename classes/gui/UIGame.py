@@ -44,8 +44,14 @@ class UIGame(QWidget):
         self.enemyHealth.setPixmap(QPixmap(os.path.join(ASSETS_DIR, "health.png")))
         self.enemyHealthCounter = QLabel("10")
         self.enemyHealthBox = QHBoxLayout()
+        self.enemyThunder = QLabel()
+        self.enemyThunder.setPixmap(QPixmap(os.path.join(ASSETS_DIR, "thunder.png")))
+        self.enemyThunderCounter = QLabel("1")
+
         self.enemyHealthBox.addWidget(self.enemyHealth)
         self.enemyHealthBox.addWidget(self.enemyHealthCounter)
+        self.enemyHealthBox.addWidget(self.enemyThunder)
+        self.enemyHealthBox.addWidget(self.enemyThunderCounter)
 
         self.enemyCard = QLabel()
         self.enemyCard.setPixmap(QPixmap(os.path.join(ASSETS_DIR, "card.png")).scaled(200, 250))
@@ -65,8 +71,13 @@ class UIGame(QWidget):
         self.playerHealth.setPixmap(QPixmap(os.path.join(ASSETS_DIR, "health.png")))
         self.playerHealthCounter = QLabel("10")
         self.playerHealthBox = QHBoxLayout()
+        self.playerThunder = QLabel()
+        self.playerThunder.setPixmap(QPixmap(os.path.join(ASSETS_DIR, "thunder.png")))
+        self.playerThunderCounter = QLabel("1")
         self.playerHealthBox.addWidget(self.playerHealth)
         self.playerHealthBox.addWidget(self.playerHealthCounter)
+        self.playerHealthBox.addWidget(self.playerThunder)
+        self.playerHealthBox.addWidget(self.playerThunderCounter)
 
         self.playerCard = QLabel()
         self.playerCard.setPixmap(QPixmap(os.path.join(ASSETS_DIR, "card.png")).scaled(200, 250))
