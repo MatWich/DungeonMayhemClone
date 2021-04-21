@@ -1,7 +1,7 @@
 try:
     from classes.game_logic.Data import Data
     from PyQt5.QtWidgets import QWidget, QPushButton, QLabel, QGridLayout, QHBoxLayout, QVBoxLayout
-    from PyQt5.QtGui import QCursor, QPixmap
+    from PyQt5.QtGui import QCursor, QPixmap, QFont
     from PyQt5 import QtCore
     from config import *
 except ImportError:
@@ -18,6 +18,11 @@ class UIGame(QWidget):
 
 
     def initUI(self):
+        helthFont = QFont("Windlass", 15)
+        actionsFont = QFont("Windlass", 15)
+        shieldFont = QFont("Windlass", 15)
+        nameFont = QFont("Windlass", 40)
+
         self.setStyleSheet("""
                 *{
                     margin: 0px;
@@ -43,18 +48,27 @@ class UIGame(QWidget):
         # ENEMY
         self.enemyNameLabel = QLabel(self.data.enemy.name)
         self.enemyNameLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+        self.enemyNameLabel.setStyleSheet("color: " + self.what_color(self.data.enemy) + ";")
+        self.enemyNameLabel.setFont(nameFont)
 
         self.enemyHealth = QLabel()
         self.enemyHealth.setPixmap(QPixmap(os.path.join(ASSETS_DIR, "health.png")))
-        self.enemyHealthCounter = QLabel("10")
+        self.enemyHealthCounter = QLabel(str(self.data.enemy.hp))
+        self.enemyHealthCounter.setStyleSheet("color: rgb(214, 48, 2);")
+        self.enemyHealthCounter.setFont(helthFont)
+
         self.enemyHealthBox = QHBoxLayout()
         self.enemyThunder = QLabel()
         self.enemyThunder.setPixmap(QPixmap(os.path.join(ASSETS_DIR, "thunder.png")))
-        self.enemyThunderCounter = QLabel("1")
+        self.enemyThunderCounter = QLabel(str(self.data.enemy.actions))
+        self.enemyThunderCounter.setStyleSheet("color: rgb(204, 180, 75);")
+        self.enemyThunderCounter.setFont(actionsFont)
 
         self.enemyShield = QLabel()
         self.enemyShield.setPixmap(QPixmap(os.path.join(ASSETS_DIR, "shield.png")))
-        self.enemyShieldCounter = QLabel("0")
+        self.enemyShieldCounter = QLabel(str(self.data.enemy.shield))
+        self.enemyShieldCounter.setStyleSheet("color: rgb(153, 108, 12);")
+        self.enemyShieldCounter.setFont(shieldFont)
 
         self.enemyHealthBox.addWidget(self.enemyHealth)
         self.enemyHealthBox.addWidget(self.enemyHealthCounter)
@@ -71,23 +85,33 @@ class UIGame(QWidget):
         margin: 7px;
         padding: 6px;
         border: 1px solid red;
-        border-radius: 4px;""")
+        border-radius: 4px;""" + "color: " + self.what_color(self.data.enemy))
 
         # PLAYER
         self.playerNameLabel = QLabel(self.data.player.name)
         self.playerNameLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.playerNameLabel.setStyleSheet("color: " + self.what_color(self.data.player) + ";")
+        self.playerNameLabel.setFont(nameFont)
 
         self.playerHealth = QLabel()
         self.playerHealth.setPixmap(QPixmap(os.path.join(ASSETS_DIR, "health.png")))
         self.playerHealthCounter = QLabel(str(self.data.player.hp))
+        self.playerHealthCounter.setStyleSheet("color: rgb(214, 48, 2);" +
+                                               "font-size: 14;")
+        self.playerHealthCounter.setFont(helthFont)
+
         self.playerHealthBox = QHBoxLayout()
         self.playerThunder = QLabel()
         self.playerThunder.setPixmap(QPixmap(os.path.join(ASSETS_DIR, "thunder.png")))
-        self.playerThunderCounter = QLabel("1")
+        self.playerThunderCounter = QLabel(str(self.data.player.actions))
+        self.playerThunderCounter.setFont(actionsFont)
+        self.playerThunderCounter.setStyleSheet("color: rgb(204, 180, 75);")
         self.playerShield = QLabel()
         self.playerShield.setPixmap(QPixmap(os.path.join(ASSETS_DIR, "shield.png")))
-        self.playerShieldCounter = QLabel("0")
+        self.playerShieldCounter = QLabel(str(self.data.player.shield))
+        self.playerShieldCounter.setStyleSheet("color: rgb(153, 108, 12);")
+        self.playerShieldCounter.setFont(shieldFont)
+
         self.playerHealthBox.addWidget(self.playerHealth)
         self.playerHealthBox.addWidget(self.playerHealthCounter)
         self.playerHealthBox.addWidget(self.playerThunder)
@@ -99,29 +123,44 @@ class UIGame(QWidget):
         self.playerCard.setPixmap(QPixmap(os.path.join(ASSETS_DIR, "card.png")).scaled(200, 250))
 
         self.HboxLayout = QHBoxLayout()
-        self.leftNavBtn = QPushButton(">")
-        self.leftNavBtn.setStyleSheet("""
-        margin: 6px;
-        padding: 5px;
-        border: 1px solid red;
-        border-radius: 3px;
-        """)
+        self.leftNavBtn = QPushButton("<")
+        self.leftNavBtn.setStyleSheet(
+                "*{ margin: 6px;" +
+                "padding: 5px;" +
+                "border: 1px solid" + self.what_color(self.data.player) + ";" +
+                "border-radius: 3px;" +
+                "color: " + self.what_color(self.data.player) + "; }" +
+                "*:hover {" +
+                "background: " + self.what_color(self.data.player) + ";" +
+                "color: white;" +
+                "}"
+                )
 
-        self.rightNavBtn = QPushButton("<")
-        self.rightNavBtn.setStyleSheet("""
-        margin: 6px;
-        padding: 5px;
-        border: 1px solid red;
-        border-radius: 3px;
-        """)
+        self.rightNavBtn = QPushButton(">")
+        self.rightNavBtn.setStyleSheet(
+                "*{ margin: 6px;" +
+                "padding: 5px;" +
+                "border: 1px solid" + self.what_color(self.data.player) + ";" +
+                "border-radius: 3px;" +
+                "color: " + self.what_color(self.data.player) + "; }" +
+                "*:hover {" +
+                "background: " + self.what_color(self.data.player) + ";" +
+                "color: white;" +
+                "}"
+                )
 
         self.pickBtn = QPushButton("Play")
-        self.pickBtn.setStyleSheet("""
-                margin: 6px;
-                padding: 5px;
-                border: 1px solid red;
-                border-radius: 3px;
-                """)
+        self.pickBtn.setStyleSheet(
+                "*{ margin: 6px;" +
+                "padding: 5px;" +
+                "border: 1px solid" + self.what_color(self.data.player) + ";" +
+                "border-radius: 3px;" +
+                "color: " + self.what_color(self.data.player) + "; }" +
+                "*:hover {" +
+                "background: " + self.what_color(self.data.player) + ";" +
+                "color: white;" +
+                "}"
+                )
 
         self.HboxLayout.addWidget(self.leftNavBtn)
         self.HboxLayout.addWidget(self.pickBtn)
@@ -157,12 +196,12 @@ class UIGame(QWidget):
 
     def what_color(self, player):
         if player.color == RED:
-            return "#DC143C"
+            return "#CC3300"
         elif player.color == YELLOW:
-            return "#B8860B"
+            return "#CCCC66"
         elif player.color == PURPLE:
-            return "#800080"
+            return "#9933CC"
         elif player.color == GREEN:
-            return "#32CD32"
+            return "#66CC66"
         else:
             raise Exception("Something went wrong with player color")

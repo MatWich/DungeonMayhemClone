@@ -3,6 +3,7 @@ try:
 except ImportError:
     raise ImportError("Cannot import all modules in config.py")
 
+SCR_SIZE = (WIDTH, HEIGHT) = (900, 500)
 TITLE = "Dungeon Maythem Clone Game"
 
 PROJECT_DIR = os.path.dirname(__file__)

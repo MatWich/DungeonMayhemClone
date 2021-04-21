@@ -1,7 +1,5 @@
-from classes.game_logic.Data import Data
-from classes.game_logic.Player import Player
-
 try:
+    import random
     from PyQt5.QtGui import QPainter, QPixmap
     import sys
     from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QWidget
@@ -9,6 +7,8 @@ try:
     from classes.gui.UIStart import UIStart
     from classes.gui.UIGame import UIGame
     from config import *
+    from classes.game_logic.Data import Data
+    from classes.game_logic.Player import Player
 except ImportError:
 
     raise ImportError("Cannot import all modules")
@@ -25,8 +25,8 @@ class MainWindow(QMainWindow):
 
     def show_menu(self):
         self.setWindowTitle(TITLE)
-        self.setMinimumWidth(850)
-        self.setMinimumHeight(450)
+        self.setMinimumWidth(SCR_SIZE[0])
+        self.setMinimumHeight(SCR_SIZE[1])
         self.UIMenu = UIMenu(self)
         self.UIMenu.palladinBtn.clicked.connect(lambda: self.show_game_screen(self.UIMenu.palladinBtn))
         self.UIMenu.monkBtn.clicked.connect(lambda: self.show_game_screen(self.UIMenu.monkBtn))
@@ -36,19 +36,22 @@ class MainWindow(QMainWindow):
         self.show()
 
     def show_game_screen(self, btn):
-        self.data.player = Player(btn.text())
-        self.data.enemy = Player(btn.text())
+        decks_available = [RED, YELLOW, PURPLE, GREEN]
+        decks_available.remove(btn.text())
+        index = random.randint(0, len(decks_available) - 1)
+        self.data.player = Player(btn.text(), "Player")
+        self.data.enemy = Player(decks_available[index], "Enemy")
         self.setWindowTitle(TITLE)
-        self.setMinimumWidth(850)
-        self.setMinimumHeight(450)
+        self.setMinimumWidth(SCR_SIZE[0])
+        self.setMinimumHeight(SCR_SIZE[1])
         self.UIGame = UIGame(self)
         self.setCentralWidget(self.UIGame)
         self.show()
 
     def starting_screen(self):
         self.setWindowTitle(TITLE)
-        self.setMinimumWidth(850)
-        self.setMinimumHeight(450)
+        self.setMinimumWidth(SCR_SIZE[0])
+        self.setMinimumHeight(SCR_SIZE[1])
         self.UIStart = UIStart(self)
         self.setCentralWidget(self.UIStart)
         self.show()
