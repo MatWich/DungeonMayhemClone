@@ -1,4 +1,5 @@
 try:
+    from classes.game_logic.Data import Data
     from PyQt5.QtWidgets import QWidget, QPushButton, QLabel, QGridLayout, QHBoxLayout, QVBoxLayout
     from PyQt5.QtGui import QCursor, QPixmap
     from PyQt5 import QtCore
@@ -9,6 +10,9 @@ except ImportError:
 class UIGame(QWidget):
     def __init__(self, parent):
         super(UIGame, self).__init__(parent)
+        self.data = Data.get_instance()
+        self.playerColor = None
+        self.enemyColor = None
 
         self.initUI()
 
@@ -37,8 +41,8 @@ class UIGame(QWidget):
         self.mainLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignHCenter)
 
         # ENEMY
-        self.enemyNameLabel = QLabel("Enemy")
-        self.enemyNameLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignLeft)
+        self.enemyNameLabel = QLabel(self.data.enemy.name)
+        self.enemyNameLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
 
         self.enemyHealth = QLabel()
         self.enemyHealth.setPixmap(QPixmap(os.path.join(ASSETS_DIR, "health.png")))
@@ -48,10 +52,16 @@ class UIGame(QWidget):
         self.enemyThunder.setPixmap(QPixmap(os.path.join(ASSETS_DIR, "thunder.png")))
         self.enemyThunderCounter = QLabel("1")
 
+        self.enemyShield = QLabel()
+        self.enemyShield.setPixmap(QPixmap(os.path.join(ASSETS_DIR, "shield.png")))
+        self.enemyShieldCounter = QLabel("0")
+
         self.enemyHealthBox.addWidget(self.enemyHealth)
         self.enemyHealthBox.addWidget(self.enemyHealthCounter)
         self.enemyHealthBox.addWidget(self.enemyThunder)
         self.enemyHealthBox.addWidget(self.enemyThunderCounter)
+        self.enemyHealthBox.addWidget(self.enemyShield)
+        self.enemyHealthBox.addWidget(self.enemyShieldCounter)
 
         self.enemyCard = QLabel()
         self.enemyCard.setPixmap(QPixmap(os.path.join(ASSETS_DIR, "card.png")).scaled(200, 250))
@@ -64,20 +74,26 @@ class UIGame(QWidget):
         border-radius: 4px;""")
 
         # PLAYER
-        self.playerNameLabel = QLabel("Player")
-        self.playerNameLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignRight)
+        self.playerNameLabel = QLabel(self.data.player.name)
+        self.playerNameLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+        self.playerNameLabel.setStyleSheet("color: " + self.what_color(self.data.player) + ";")
 
         self.playerHealth = QLabel()
         self.playerHealth.setPixmap(QPixmap(os.path.join(ASSETS_DIR, "health.png")))
-        self.playerHealthCounter = QLabel("10")
+        self.playerHealthCounter = QLabel(str(self.data.player.hp))
         self.playerHealthBox = QHBoxLayout()
         self.playerThunder = QLabel()
         self.playerThunder.setPixmap(QPixmap(os.path.join(ASSETS_DIR, "thunder.png")))
         self.playerThunderCounter = QLabel("1")
+        self.playerShield = QLabel()
+        self.playerShield.setPixmap(QPixmap(os.path.join(ASSETS_DIR, "shield.png")))
+        self.playerShieldCounter = QLabel("0")
         self.playerHealthBox.addWidget(self.playerHealth)
         self.playerHealthBox.addWidget(self.playerHealthCounter)
         self.playerHealthBox.addWidget(self.playerThunder)
         self.playerHealthBox.addWidget(self.playerThunderCounter)
+        self.playerHealthBox.addWidget(self.playerShield)
+        self.playerHealthBox.addWidget(self.playerShieldCounter)
 
         self.playerCard = QLabel()
         self.playerCard.setPixmap(QPixmap(os.path.join(ASSETS_DIR, "card.png")).scaled(200, 250))
@@ -138,3 +154,15 @@ class UIGame(QWidget):
 
     def leftNavBtnOnclick(self):
         pass
+
+    def what_color(self, player):
+        if player.color == RED:
+            return "#DC143C"
+        elif player.color == YELLOW:
+            return "#B8860B"
+        elif player.color == PURPLE:
+            return "#800080"
+        elif player.color == GREEN:
+            return "#32CD32"
+        else:
+            raise Exception("Something went wrong with player color")

@@ -7,7 +7,7 @@ except ImportError as ex:
 
 
 class Player:
-    def __init__(self, color):      # color refers to the deck that this player will be using
+    def __init__(self, color, name="BOT"):      # color refers to the deck that this player will be using
         self.color = color
         self.hand = []
         # this will be replaced by global list with cards by using .copy() method
@@ -17,6 +17,7 @@ class Player:
         self.shield = None
         self.actions = None
         self.data = Data.get_instance()
+        self.name = name
         self.set_up()
 
     def set_up(self):
