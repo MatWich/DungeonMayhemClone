@@ -7,15 +7,13 @@ try:
 except ImportError:
     raise ImportError("Cannot import all modules")
 
+
 class UIGame(QWidget):
     def __init__(self, parent):
         super(UIGame, self).__init__(parent)
         self.data = Data.get_instance()
-        self.playerColor = None
-        self.enemyColor = None
-
+        self.index = 0
         self.initUI()
-
 
     def initUI(self):
         helthFont = QFont("Windlass", 15)
@@ -125,42 +123,46 @@ class UIGame(QWidget):
         self.HboxLayout = QHBoxLayout()
         self.leftNavBtn = QPushButton("<")
         self.leftNavBtn.setStyleSheet(
-                "*{ margin: 6px;" +
-                "padding: 5px;" +
-                "border: 1px solid" + self.what_color(self.data.player) + ";" +
-                "border-radius: 3px;" +
-                "color: " + self.what_color(self.data.player) + "; }" +
-                "*:hover {" +
-                "background: " + self.what_color(self.data.player) + ";" +
-                "color: white;" +
-                "}"
-                )
+            "*{ margin: 6px;" +
+            "padding: 5px;" +
+            "border: 1px solid" + self.what_color(self.data.player) + ";" +
+            "border-radius: 3px;" +
+            "color: " + self.what_color(self.data.player) + "; }" +
+            "*:hover {" +
+            "background: " + self.what_color(self.data.player) + ";" +
+            "color: white;" +
+            "}"
+        )
+        self.leftNavBtn.clicked.connect(self.left_nav_btn_onclick)
 
         self.rightNavBtn = QPushButton(">")
         self.rightNavBtn.setStyleSheet(
-                "*{ margin: 6px;" +
-                "padding: 5px;" +
-                "border: 1px solid" + self.what_color(self.data.player) + ";" +
-                "border-radius: 3px;" +
-                "color: " + self.what_color(self.data.player) + "; }" +
-                "*:hover {" +
-                "background: " + self.what_color(self.data.player) + ";" +
-                "color: white;" +
-                "}"
-                )
+            "*{ margin: 6px;" +
+            "padding: 5px;" +
+            "border: 1px solid" + self.what_color(self.data.player) + ";" +
+            "border-radius: 3px;" +
+            "color: " + self.what_color(self.data.player) + "; }" +
+            "*:hover {" +
+            "background: " + self.what_color(self.data.player) + ";" +
+            "color: white;" +
+            "}"
+        )
+
+        self.rightNavBtn.clicked.connect(self.right_nav_btn_onclick)
 
         self.pickBtn = QPushButton("Play")
         self.pickBtn.setStyleSheet(
-                "*{ margin: 6px;" +
-                "padding: 5px;" +
-                "border: 1px solid" + self.what_color(self.data.player) + ";" +
-                "border-radius: 3px;" +
-                "color: " + self.what_color(self.data.player) + "; }" +
-                "*:hover {" +
-                "background: " + self.what_color(self.data.player) + ";" +
-                "color: white;" +
-                "}"
-                )
+            "*{ margin: 6px;" +
+            "padding: 5px;" +
+            "border: 1px solid" + self.what_color(self.data.player) + ";" +
+            "border-radius: 3px;" +
+            "color: " + self.what_color(self.data.player) + "; }" +
+            "*:hover {" +
+            "background: " + self.what_color(self.data.player) + ";" +
+            "color: white;" +
+            "}"
+        )
+        self.pickBtn.clicked.connect(self.pick_btn_onclick)
 
         self.HboxLayout.addWidget(self.leftNavBtn)
         self.HboxLayout.addWidget(self.pickBtn)
@@ -173,7 +175,6 @@ class UIGame(QWidget):
         self.playerVBoxLayout = QVBoxLayout()
         self.playerVBoxLayout.addWidget(self.playerNameLabel)
         self.playerVBoxLayout.addLayout(self.playerHealthBox)
-
 
         # ROW 0
         self.layout.addLayout(self.enemyWBoxLayout, 0, 0, 1, 1)
@@ -188,11 +189,19 @@ class UIGame(QWidget):
 
         self.setLayout(self.layout)
 
-    def rightNavBtnOnclick(self):
-        pass
+    def right_nav_btn_onclick(self):
+        self.index += 1
+        print(self.index)
 
-    def leftNavBtnOnclick(self):
-        pass
+    def left_nav_btn_onclick(self):
+        self.index -= 1
+        print(self.index)
+
+    def pick_btn_onclick(self):
+        self.data.enemy.hp -= 1
+        self.parent().show_game_screen()
+        self.update()
+        self.repaint()
 
     def what_color(self, player):
         if player.color == RED:

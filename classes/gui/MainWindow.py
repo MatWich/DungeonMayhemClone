@@ -17,6 +17,7 @@ except ImportError:
 class MainWindow(QMainWindow):
     def __init__(self, parent=None):
         super(QMainWindow, self).__init__(parent)
+        self.started = False
         self.data = Data.get_instance()
         #self.show_menu()
         self.starting_screen()
@@ -35,12 +36,14 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(self.UIMenu)
         self.show()
 
-    def show_game_screen(self, btn):
-        decks_available = [RED, YELLOW, PURPLE, GREEN]
-        decks_available.remove(btn.text())
-        index = random.randint(0, len(decks_available) - 1)
-        self.data.player = Player(btn.text(), "Player")
-        self.data.enemy = Player(decks_available[index], "Enemy")
+    def show_game_screen(self, btn=None):
+        if not self.started:
+            decks_available = [RED, YELLOW, PURPLE, GREEN]
+            decks_available.remove(btn.text())
+            index = random.randint(0, len(decks_available) - 1)
+            self.data.player = Player(btn.text(), "Player")
+            self.data.enemy = Player(decks_available[index], "Enemy")
+            self.started = True
         self.setWindowTitle(TITLE)
         self.setMinimumWidth(SCR_SIZE[0])
         self.setMinimumHeight(SCR_SIZE[1])
