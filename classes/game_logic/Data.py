@@ -25,6 +25,7 @@ class Data:
         self.yellowDeck = []
         self.purpleDeck = []
         self.greenDeck = []
+        self.started = False
         self.set_up()
 
 

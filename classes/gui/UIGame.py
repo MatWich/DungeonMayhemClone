@@ -1,9 +1,12 @@
+from PyQt5.QtCore import QTimer
+
 try:
     from classes.game_logic.Data import Data
-    from PyQt5.QtWidgets import QWidget, QPushButton, QLabel, QGridLayout, QHBoxLayout, QVBoxLayout
+    from PyQt5.QtWidgets import QWidget, QPushButton, QLabel, QGridLayout, QHBoxLayout, QVBoxLayout, QMessageBox
     from PyQt5.QtGui import QCursor, QPixmap, QFont
     from PyQt5 import QtCore
     from config import *
+    import random
 except ImportError:
     raise ImportError("Cannot import all modules")
 
@@ -13,6 +16,7 @@ class UIGame(QWidget):
         super(UIGame, self).__init__(parent)
         self.data = Data.get_instance()
         self.index = 0
+        self.playerTurn = True
         self.initUI()
 
     def initUI(self):
@@ -42,6 +46,7 @@ class UIGame(QWidget):
                     }
                     """)
         self.mainLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignHCenter)
+
 
         # ENEMY
         self.enemyNameLabel = QLabel(self.data.enemy.name)
@@ -191,14 +196,44 @@ class UIGame(QWidget):
 
     def right_nav_btn_onclick(self):
         self.index += 1
+        self.index_change()
         print(self.index)
 
     def left_nav_btn_onclick(self):
         self.index -= 1
+        self.index_change()
         print(self.index)
 
     def pick_btn_onclick(self):
-        self.data.enemy.hp -= 1
+        self.data.player.play_card(self.index, self.data.enemy)
+        if self.data.enemy.is_dead():
+            msg = QMessageBox.question(self, "You win", "Now, try other decks to defeat AI\nWould you like to play again?", QMessageBox.Yes | QMessageBox.No)
+            if msg == QMessageBox.Yes:
+                self.data.started = False
+                print("YES OPTION CLICKED")
+                self.parent().show_menu()
+                return
+            elif msg == QMessageBox.No:
+                self.data.started = False
+                self.parent().starting_screen()
+                return
+
+        if not self.data.player.has_actions():
+            print("enemy turn")
+            while self.data.enemy.has_actions():
+                self.data.enemy.play_card(random.randint(0, len(self.data.enemy.hand) - 1), self.data.player)
+
+        if not self.data.enemy.has_actions():
+            self.data.enemy.new_turn()
+
+        if not self.data.player.has_actions():
+            self.data.player.new_turn()
+
+        if self.data.player.is_dead():
+            msg = QMessageBox.about(self, "AI wins", "Good luck next time :D\nWould you like to try again?")
+            self.parent().show_menu()
+            return
+
         self.parent().show_game_screen()
         self.update()
         self.repaint()
@@ -214,3 +249,9 @@ class UIGame(QWidget):
             return "#66CC66"
         else:
             raise Exception("Something went wrong with player color")
+
+    def index_change(self):
+        if self.index < 0:
+            self.index = len(self.data.player.hand) - 1
+        if self.index > len(self.data.player.hand) - 1:
+            self.index = 0

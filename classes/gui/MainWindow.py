@@ -23,7 +23,6 @@ class MainWindow(QMainWindow):
         self.starting_screen()
         #self.show_game_screen()
 
-
     def show_menu(self):
         self.setWindowTitle(TITLE)
         self.setMinimumWidth(SCR_SIZE[0])
@@ -37,13 +36,13 @@ class MainWindow(QMainWindow):
         self.show()
 
     def show_game_screen(self, btn=None):
-        if not self.started:
+        if not self.data.started:
             decks_available = [RED, YELLOW, PURPLE, GREEN]
             decks_available.remove(btn.text())
             index = random.randint(0, len(decks_available) - 1)
             self.data.player = Player(btn.text(), "Player")
             self.data.enemy = Player(decks_available[index], "Enemy")
-            self.started = True
+            self.data.started = True
         self.setWindowTitle(TITLE)
         self.setMinimumWidth(SCR_SIZE[0])
         self.setMinimumHeight(SCR_SIZE[1])

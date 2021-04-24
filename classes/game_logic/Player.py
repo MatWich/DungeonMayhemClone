@@ -102,6 +102,10 @@ class Player:
     def set_deck(self, color):
         self.deck = self.data.get_redDeck()
 
+    def new_turn(self):
+        self.draw_card()
+        self.actions = 1
+
 
 if __name__ == "__main__":
     p = Player("red")
