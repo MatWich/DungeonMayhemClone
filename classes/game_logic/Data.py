@@ -40,77 +40,88 @@ class Data:
               "actions": 1,
               "draw": 0,
               "heal": 0,
-              "shield": 0}
+              "shield": 0,
+              "image": os.path.join(RED_DECK_DIR, "For_Juistice.png")}
         # 2
         c1 = {"name": "For The Most Juistice!",
               "attack": 3,
               "actions": 0,
               "draw": 0,
               "heal": 0,
-              "shield": 0}
+              "shield": 0,
+              "image": os.path.join(RED_DECK_DIR, "For_The_Most_Juistice.png")}
         # 2
         c2 = {"name": "Finger-wag of Judgment",
               "attack": 0,
               "actions": 2,
               "draw": 0,
               "heal": 0,
-              "shield": 0}
+              "shield": 0,
+              "image": os.path.join(RED_DECK_DIR, "Finger-Wag_Of_Judgement.png")}
         # 2
         c3 = {"name": "Spinning Parry",
               "attack": 0,
               "actions": 0,
               "draw": 1,
               "heal": 0,
-              "shield": 1}
+              "shield": 1,
+              "image": os.path.join(RED_DECK_DIR, "Spinning_Parry.png")}
         # 3
         c4 = {"name": "Fighting Words",
               "attack": 2,
               "actions": 0,
               "draw": 0,
               "heal": 1,
-              "shield": 0}
+              "shield": 0,
+              "image": os.path.join(RED_DECK_DIR, "Fighting_Words.png")}
         # 3
         c5 = {"name": "Divine Smite",
               "attack": 3,
               "actions": 0,
               "draw": 0,
               "heal": 1,
-              "shield": 0}
+              "shield": 0,
+              "image": os.path.join(RED_DECK_DIR, "Divine_Smite.png")}
         # 2
         c6 = {"name": "High Charisma",
               "attack": 0,
               "actions": 0,
               "draw": 2,
               "heal": 0,
-              "shield": 0}
+              "shield": 0,
+              "image": os.path.join(RED_DECK_DIR, "High_Charisma.png")}
         # 4
         c7 = {"name": "For Even More Juistice!",
               "attack": 2,
               "actions": 0,
               "draw": 0,
               "heal": 0,
-              "shield": 0}
+              "shield": 0,
+              "image": os.path.join(RED_DECK_DIR, "For_Even_More_Juistice.png")}
         # 2
         c8 = {"name": "Divine Shield",
               "attack": 0,
               "actions": 0,
               "draw": 0,
               "heal": 0,
-              "shield": 3}
+              "shield": 3,
+              "image": os.path.join(RED_DECK_DIR, "Divine_Shield.png")}
         # 1
         c9 = {"name": "Fluffy",
               "attack": 0,
               "actions": 0,
               "draw": 0,
               "heal": 0,
-              "shield": 2}
+              "shield": 2,
+              "image": os.path.join(RED_DECK_DIR, "Fluffy.png")}
         # 1
         c10 = {"name": "Cure Wounds",
                "attack": 0,
                "actions": 0,
                "draw": 2,
                "heal": 1,
-               "shield": 0}
+               "shield": 0,
+               "image": os.path.join(RED_DECK_DIR, "Cure_Wounds.png")}
 
         self.redDeck.append(Card(c0))
         self.redDeck.append(Card(c0))

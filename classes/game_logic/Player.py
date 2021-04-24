@@ -106,6 +106,12 @@ class Player:
         self.draw_card()
         self.actions = 1
 
+    def refil_hand(self):
+        for i in range(3):
+            self.draw_card()
+
+    def is_empty_hand(self):
+        return True if len(self.hand) == 0 else False
 
 if __name__ == "__main__":
     p = Player("red")

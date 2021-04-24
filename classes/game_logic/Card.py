@@ -6,6 +6,7 @@ class Card:
         self.draw = info["draw"]
         self.heal = info["heal"]
         self.shield = info["shield"]
+        self.image = info["image"]
 
     # just for condsole output
     def __repr__(self):

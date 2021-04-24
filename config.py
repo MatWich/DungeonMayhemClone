@@ -8,6 +8,7 @@ TITLE = "Dungeon Maythem Clone Game"
 
 PROJECT_DIR = os.path.dirname(__file__)
 ASSETS_DIR = os.path.join(PROJECT_DIR, "assets")
+RED_DECK_DIR = os.path.join(ASSETS_DIR, "red_deck")
 
 RED = "Palladin"
 YELLOW = "Monk"

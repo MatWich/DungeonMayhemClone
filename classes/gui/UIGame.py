@@ -123,7 +123,7 @@ class UIGame(QWidget):
         self.playerHealthBox.addWidget(self.playerShieldCounter)
 
         self.playerCard = QLabel()
-        self.playerCard.setPixmap(QPixmap(os.path.join(ASSETS_DIR, "card.png")).scaled(200, 250))
+        self.playerCard.setPixmap(QPixmap(os.path.join(ASSETS_DIR, self.data.player.hand[self.index].image)).scaled(200, 250))
 
         self.HboxLayout = QHBoxLayout()
         self.leftNavBtn = QPushButton("<")
@@ -198,13 +198,21 @@ class UIGame(QWidget):
         self.index += 1
         self.index_change()
         print(self.index)
+        self.playerCard.setPixmap(QPixmap(os.path.join(ASSETS_DIR, self.data.player.hand[self.index].image)).scaled(200, 250))
 
     def left_nav_btn_onclick(self):
         self.index -= 1
         self.index_change()
         print(self.index)
+        self.playerCard.setPixmap(QPixmap(os.path.join(ASSETS_DIR, self.data.player.hand[self.index].image)).scaled(200, 250))
 
     def pick_btn_onclick(self):
+        if self.data.player.is_empty_hand():
+            self.data.player.refil_hand()
+
+        if self.data.enemy.is_empty_hand():
+            self.data.enemy.refil_hand()
+            
         self.data.player.play_card(self.index, self.data.enemy)
         if self.data.enemy.is_dead():
             msg = QMessageBox.question(self, "You win", "Now, try other decks to defeat AI\nWould you like to play again?", QMessageBox.Yes | QMessageBox.No)
