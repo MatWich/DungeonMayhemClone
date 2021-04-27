@@ -26,6 +26,7 @@ class Data:
         self.purpleDeck = []
         self.greenDeck = []
         self.started = False
+        self.textHistory = ""
         self.set_up()
 
 

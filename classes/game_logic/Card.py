@@ -8,6 +8,6 @@ class Card:
         self.shield = info["shield"]
         self.image = info["image"]
 
-    # just for condsole output
+    # just for console output
     def __repr__(self):
         return f"{self.name} atk: {self.attack} act: {self.actions} draw: {self.draw} shield: {self.shield} heal: {self.heal}"

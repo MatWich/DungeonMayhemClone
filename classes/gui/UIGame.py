@@ -1,11 +1,10 @@
-from PyQt5.QtCore import QTimer
-
 try:
     from classes.game_logic.Data import Data
     from PyQt5.QtWidgets import QWidget, QPushButton, QLabel, QGridLayout, QHBoxLayout, QVBoxLayout, QMessageBox
     from PyQt5.QtGui import QCursor, QPixmap, QFont
     from PyQt5 import QtCore
     from config import *
+    from classes.gui.ScrollLabel import ScrollLabel
     import random
 except ImportError:
     raise ImportError("Cannot import all modules")
@@ -46,6 +45,9 @@ class UIGame(QWidget):
                     }
                     """)
         self.mainLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignHCenter)
+        self.history = ScrollLabel(self)
+        self.history.setText(self.data.textHistory)
+        self.history.setStyleSheet("background: rgba(0,0,0,0);")
 
 
         # ENEMY
@@ -187,6 +189,7 @@ class UIGame(QWidget):
         self.layout.addLayout(self.playerVBoxLayout, 0, 2, 1, 1)
         # ROW 1
         self.layout.addWidget(self.enemyCard, 1, 0, 1, 1)
+        self.layout.addWidget(self.history, 1, 1, 2, 1)
         self.layout.addWidget(self.playerCard, 1, 2, 1, 1)
         # ROW 2
         self.layout.addWidget(self.enemyInfo, 2, 0, 1, 1)
@@ -212,13 +215,16 @@ class UIGame(QWidget):
 
         if self.data.enemy.is_empty_hand():
             self.data.enemy.refil_hand()
-            
+
+        self.index = 0
+
+        self.add_text("player", repr(self.data.player.hand[self.index]))
         self.data.player.play_card(self.index, self.data.enemy)
+
         if self.data.enemy.is_dead():
             msg = QMessageBox.question(self, "You win", "Now, try other decks to defeat AI\nWould you like to play again?", QMessageBox.Yes | QMessageBox.No)
             if msg == QMessageBox.Yes:
                 self.data.started = False
-                print("YES OPTION CLICKED")
                 self.parent().show_menu()
                 return
             elif msg == QMessageBox.No:
@@ -229,7 +235,9 @@ class UIGame(QWidget):
         if not self.data.player.has_actions():
             print("enemy turn")
             while self.data.enemy.has_actions():
-                self.data.enemy.play_card(random.randint(0, len(self.data.enemy.hand) - 1), self.data.player)
+                index = random.randint(0, len(self.data.enemy.hand) - 1)
+                self.add_text("enemy", repr(self.data.enemy.hand[index]))
+                self.data.enemy.play_card(index, self.data.player)
 
         if not self.data.enemy.has_actions():
             self.data.enemy.new_turn()
@@ -263,3 +271,18 @@ class UIGame(QWidget):
             self.index = len(self.data.player.hand) - 1
         if self.index > len(self.data.player.hand) - 1:
             self.index = 0
+
+    def add_text(self, who, text):
+        if who == "player":
+            self.data.textHistory += "PLAYER\n"
+            self.data.textHistory += text + "\n"
+        elif who == "enemy":
+            self.data.textHistory += "Enemy\n"
+            self.data.textHistory += text + "\n"
+        else:
+            raise Exception("You should pass 'player' or 'enemy' as a first param.")
+        print('------textHistory-----------')
+        print(self.data.textHistory)
+        print('---endTextHistory-----------')
+
+        # self.history.setText(text)
