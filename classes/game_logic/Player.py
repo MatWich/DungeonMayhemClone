@@ -9,14 +9,14 @@ except ImportError as ex:
 class Player:
     def __init__(self, color, name="BOT"):      # color refers to the deck that this player will be using
         self.color = color
+        self.data = Data.get_instance()
         self.hand = []
         # this will be replaced by global list with cards by using .copy() method
-        self.deck = []
+        self.deck = self.data.get_deck(self.color)
         self.discardPile = []
         self.hp = None
         self.shield = None
         self.actions = None
-        self.data = Data.get_instance()
         self.name = name
         self.set_up()
 
@@ -24,7 +24,6 @@ class Player:
         self.hp = 10
         self.shield = 0
         self.actions = 1
-        self.set_deck(self.color)
 
         for i in range(3):
             self.draw_card()
@@ -99,9 +98,6 @@ class Player:
     def summary(self):
         print(f"HP: {self.hp}, SHIELD: {self.shield} HAND: {len(self.hand)} ACTIONS: {self.actions}")
 
-    def set_deck(self, color):
-        self.deck = self.data.get_redDeck()
-
     def new_turn(self):
         self.draw_card()
         self.actions = 1
@@ -112,12 +108,3 @@ class Player:
 
     def is_empty_hand(self):
         return True if len(self.hand) == 0 else False
-
-if __name__ == "__main__":
-    p = Player("red")
-    p2 = Player("yellow")
-    p.play_card(0, p2)
-    print("P2")
-    p2.summary()
-    print("P1")
-    p.summary()

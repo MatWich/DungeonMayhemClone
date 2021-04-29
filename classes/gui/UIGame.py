@@ -229,7 +229,7 @@ class UIGame(QWidget):
                 return
             elif msg == QMessageBox.No:
                 self.data.started = False
-                self.parent().starting_screen()
+                self.parent().exit_screen()
                 return
 
         if not self.data.player.has_actions():
@@ -247,7 +247,7 @@ class UIGame(QWidget):
 
         if self.data.player.is_dead():
             msg = QMessageBox.about(self, "AI wins", "Good luck next time :D\nWould you like to try again?")
-            self.parent().show_menu()
+            self.parent().exit_screen()
             return
 
         self.parent().show_game_screen()

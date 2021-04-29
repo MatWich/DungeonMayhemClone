@@ -1,3 +1,5 @@
+from PyQt5.QtCore import QCoreApplication
+
 try:
     import random
     from PyQt5.QtGui import QPainter, QPixmap
@@ -9,6 +11,7 @@ try:
     from config import *
     from classes.game_logic.Data import Data
     from classes.game_logic.Player import Player
+    from classes.gui.UIExit import UIExit
 except ImportError:
 
     raise ImportError("Cannot import all modules")
@@ -17,7 +20,6 @@ except ImportError:
 class MainWindow(QMainWindow):
     def __init__(self, parent=None):
         super(QMainWindow, self).__init__(parent)
-        self.started = False
         self.data = Data.get_instance()
         #self.show_menu()
         self.starting_screen()
@@ -42,6 +44,7 @@ class MainWindow(QMainWindow):
             index = random.randint(0, len(decks_available) - 1)
             self.data.player = Player(btn.text(), "Player")
             self.data.enemy = Player(decks_available[index], "Enemy")
+            self.data.textHistory = ""
             self.data.started = True
         self.setWindowTitle(TITLE)
         self.setMinimumWidth(SCR_SIZE[0])
@@ -58,9 +61,20 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(self.UIStart)
         self.show()
 
+    def exit_screen(self):
+        self.setWindowTitle(TITLE)
+        self.setMinimumWidth(SCR_SIZE[0])
+        self.setMinimumHeight(SCR_SIZE[1])
+        self.UIExit = UIExit(self)
+        self.setCentralWidget(self.UIExit)
+        self.show()
+
     def paintEvent(self, event):  # set background_img
         painter = QPainter(self)
         painter.drawRect(self.rect())
         pixmap = QPixmap(os.path.join(ASSETS_DIR, "bg1.jpg"))  # Change to the relative path of your own image
 
         painter.drawPixmap(self.rect(), pixmap)
+
+
+
