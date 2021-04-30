@@ -1,5 +1,5 @@
-# DungeonMaythemClone
-GUI version of the card game named Dungeon Maythem 
+# DungeonMayhemClone
+GUI version of the card game named Dungeon Mayhem 
 
 ## TO DO:
 - [x] Create game logic and classes
