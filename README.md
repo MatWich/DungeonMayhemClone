@@ -6,18 +6,23 @@ GUI version of the card game named Dungeon Mayhem
   - [x] Card class
   - [x] Player class
     
-- [ ] Create some basic gui
+- [x] Create some basic gui
   - [x] MainWindow class
   - [x] Game Window
   - [x] Menu Window
-  - [ ] Exit Window
+  - [x] Exit Window
 - [x] Connect GUI to logic
 
 # How to start 
 
 ```
-$ git clone https://github.com/MatWich/DungeonMaythemClone.git
-$ cd DungeonMaythemClone
+$ git clone https://github.com/MatWich/DungeonMayhemClone.git
+$ cd DungeonMayhemClone
 $ pip install -r requirements.txt
 $ python ./main.py
+```
+
+# Run Tests
+```
+$ python -m unittest
 ```

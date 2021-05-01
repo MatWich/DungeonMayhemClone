@@ -125,7 +125,7 @@ class UIGame(QWidget):
         self.playerHealthBox.addWidget(self.playerShieldCounter)
 
         self.playerCard = QLabel()
-        self.playerCard.setPixmap(QPixmap(os.path.join(ASSETS_DIR, self.data.player.hand[self.index].image)).scaled(200, 250))
+        self.playerCard.setPixmap(QPixmap(self.data.player.hand[self.index].image).scaled(200, 250))
 
         self.HboxLayout = QHBoxLayout()
         self.leftNavBtn = QPushButton("<")
@@ -201,13 +201,13 @@ class UIGame(QWidget):
         self.index += 1
         self.index_change()
         print(self.index)
-        self.playerCard.setPixmap(QPixmap(os.path.join(ASSETS_DIR, self.data.player.hand[self.index].image)).scaled(200, 250))
+        self.playerCard.setPixmap(QPixmap(self.data.player.hand[self.index].image).scaled(200, 250))
 
     def left_nav_btn_onclick(self):
         self.index -= 1
         self.index_change()
         print(self.index)
-        self.playerCard.setPixmap(QPixmap(os.path.join(ASSETS_DIR, self.data.player.hand[self.index].image)).scaled(200, 250))
+        self.playerCard.setPixmap(QPixmap(self.data.player.hand[self.index].image).scaled(200, 250))
 
     def pick_btn_onclick(self):
         if self.data.player.is_empty_hand():
@@ -235,6 +235,9 @@ class UIGame(QWidget):
         if not self.data.player.has_actions():
             print("enemy turn")
             while self.data.enemy.has_actions():
+                if self.data.enemy.is_empty_hand():
+                    self.data.enemy.refil_hand()
+
                 index = random.randint(0, len(self.data.enemy.hand) - 1)
                 self.add_text("enemy", repr(self.data.enemy.hand[index]))
                 self.data.enemy.play_card(index, self.data.player)

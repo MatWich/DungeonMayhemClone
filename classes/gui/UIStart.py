@@ -34,7 +34,6 @@ class UIStart(QWidget):
                                  "height: 100%;"
                                  "background-position: center;"
                                  "background-repeat: no-repeat;"
-                                 "background-size: cover;"
                                  "}")
 
         self.textLabel = QLabel("Click anywhere to start")
